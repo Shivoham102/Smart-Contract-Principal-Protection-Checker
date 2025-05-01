@@ -1,5 +1,7 @@
 # Smart Contract Checker
 
+A command line tool that helps detect vulnerabilities in Solidity smart contracts using Slither and LLMs to give concrete feedback. The tool scores contracts out of 10 based on severity of the detected vulnerabilities. Also provides a detailed report in json format.
+
 ## Setup
 
 1. Create Project Directory:
