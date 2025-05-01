@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract SecureContract is Ownable, ReentrancyGuard {
     mapping(address => uint256) public balances;
@@ -12,6 +12,8 @@ contract SecureContract is Ownable, ReentrancyGuard {
     event Withdrawn(address indexed user, uint256 amount);
     event EmergencyWithdrawalQueued(address indexed user, uint256 amount);
     event EmergencyWithdrawalClaimed(address indexed user, uint256 amount);
+
+    constructor() Ownable(msg.sender) {}
 
     function deposit() external payable {
         require(msg.value > 0, "No ETH sent");

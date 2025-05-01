@@ -103,7 +103,7 @@ function runSlither(filePath) {
     encoding: 'utf-8'
   });
 
-  // console.log(result);
+  console.log(result);
 
   if (result.error) {
     console.error('❌ Slither failed to run:', result.error.message);
@@ -142,7 +142,7 @@ function runSlither(filePath) {
           d.impact === 'High' ||
           d.impact === 'Informational'
         ) &&
-        ['reentrancy', 'access-control', 'arithmetic', 'unchecked-transfer', 'solc-version'].includes(d.check)
+        ['reentrancy', 'access-control', 'arithmetic', 'unchecked-transfer', 'solc-version', 'reentrancy-eth'].includes(d.check)
       )
 
       .map(() => ({
@@ -153,7 +153,18 @@ function runSlither(filePath) {
       })) || [];
   });
 
-  return filteredFindings;
+  // Remove duplicates based on `issue`
+  const seen = new Set();
+  const uniqueFilteredFindings = filteredFindings.filter(finding => {
+    if (seen.has(finding.issue)) {
+      return false;
+    }
+    seen.add(finding.issue);
+    return true;
+  });
+
+
+  return uniqueFilteredFindings;
 }
 
 

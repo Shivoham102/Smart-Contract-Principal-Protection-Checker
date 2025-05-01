@@ -12,7 +12,7 @@ contract VulnerableContract {
         require(balances[msg.sender] >= amount, "Insufficient funds");
 
         // Vulnerable pattern: call before state change (reentrancy risk)
-        (bool success, ) = msg.sender.call{value: amount}("");
+        (bool success, ) = msg.sender.call.value(amount)("");
         require(success, "Transfer failed");
 
         balances[msg.sender] -= amount;
@@ -22,7 +22,9 @@ contract VulnerableContract {
     function adminDrain(address user) public {
         uint256 userBalance = balances[user];
         balances[user] = 0;
-        (bool success, ) = msg.sender.call{value: userBalance}("");
+
+        // Fixed syntax to be compatible with Solidity 0.6.0
+        (bool success, ) = msg.sender.call.value(userBalance)("");
         require(success, "Admin drain failed");
     }
 }
