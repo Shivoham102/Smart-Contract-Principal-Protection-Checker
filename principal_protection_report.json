@@ -1,0 +1,53 @@
+{
+  "score": 5,
+  "grokFindings": [
+    {
+      "issue": "Missing Access Control for Owner Minting",
+      "severity": "Moderate",
+      "recommendation": "Implement an `onlyOwner` modifier on any future minting functions to restrict access to the contract owner. Also, if further minting is unnecessary, ensure that no minting functionality is introduced in future updates.",
+      "risk": "principal_loss"
+    },
+    {
+      "issue": "Potential Integer Truncation in Fee Calculation",
+      "severity": "Minor",
+      "recommendation": "Consider using SafeMath for all arithmetic operations. Also, add a check to ensure amount is at least 100, or apply more robust fee calculations logic that ensures minimum fee amount.",
+      "risk": "principal_loss"
+    },
+    {
+      "issue": "Missing Event for Fee Transfer",
+      "severity": "Minor",
+      "recommendation": "Emit a custom event after the fee is transferred to the owner. This event should include the sender, receiver (owner), and the amount of the fee. This improves auditability and transparency.",
+      "risk": "principal_loss"
+    }
+  ],
+  "slitherFindings": [
+    {
+      "issue": "Version constraint ^0.8.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess\n\t- AbiReencodingHeadOverflowWithStaticArrayCleanup\n\t- DirtyBytesArrayToStorage\n\t- DataLocationChangeInInternalOverride\n\t- NestedCalldataArrayAbiReencodingSizeValidation\n\t- SignedImmutables\n\t- ABIDecodeTwoDimensionalArrayMemory\n\t- KeccakCaching.\nIt is used by:\n\t- ^0.8.0 (contracts/TestContract.sol#2)\n",
+      "severity": "Critical",
+      "recommendation": "Mitigate solc-version vulnerability (see Slither documentation).",
+      "risk": "principal_loss"
+    }
+  ],
+  "deductions": [
+    {
+      "issue": "Missing Access Control for Owner Minting",
+      "severity": "Moderate",
+      "deduction": 1
+    },
+    {
+      "issue": "Potential Integer Truncation in Fee Calculation",
+      "severity": "Minor",
+      "deduction": 0.5
+    },
+    {
+      "issue": "Missing Event for Fee Transfer",
+      "severity": "Minor",
+      "deduction": 0.5
+    },
+    {
+      "issue": "Version constraint ^0.8.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)\n\t- FullInlinerNonExpressionSplitArgumentEvaluationOrder\n\t- MissingSideEffectsOnSelectorAccess\n\t- AbiReencodingHeadOverflowWithStaticArrayCleanup\n\t- DirtyBytesArrayToStorage\n\t- DataLocationChangeInInternalOverride\n\t- NestedCalldataArrayAbiReencodingSizeValidation\n\t- SignedImmutables\n\t- ABIDecodeTwoDimensionalArrayMemory\n\t- KeccakCaching.\nIt is used by:\n\t- ^0.8.0 (contracts/TestContract.sol#2)\n",
+      "severity": "Critical",
+      "deduction": 3
+    }
+  ]
+}
